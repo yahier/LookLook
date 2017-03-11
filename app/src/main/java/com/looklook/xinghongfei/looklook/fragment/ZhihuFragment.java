@@ -116,7 +116,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         recycle.setLayoutManager(mLinearLayoutManager);
         recycle.setHasFixedSize(true);
         recycle.addItemDecoration(new GridItemDividerDecoration(getContext(), R.dimen.divider_height, R.color.divider));
-        // TODO: 16/8/13 add  animation
+        // 16/8/13 add  animation
         recycle.setItemAnimator(new DefaultItemAnimator());
         recycle.setAdapter(zhihuAdapter);
         recycle.addOnScrollListener(loadingMoreListener);

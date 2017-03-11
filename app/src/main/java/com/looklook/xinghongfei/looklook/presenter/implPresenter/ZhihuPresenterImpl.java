@@ -36,6 +36,7 @@ public class ZhihuPresenterImpl extends BasePresenterImpl implements IZhihuPrese
     public void getLastZhihuNews() {
         mZhihuFragment.showProgressDialog();
         Subscription subscription = ApiManage.getInstence().getZhihuApiService().getLastDaily()
+                //map接口，强大的变换功能
                 .map(new Func1<ZhihuDaily, ZhihuDaily>() {
                     @Override
                     public ZhihuDaily call(ZhihuDaily zhihuDaily) {
@@ -46,7 +47,10 @@ public class ZhihuPresenterImpl extends BasePresenterImpl implements IZhihuPrese
                         return zhihuDaily;
                     }
                 })
+
+                // 指定 subscribe() 发生在 IO 线程
                 .subscribeOn(Schedulers.io())
+                // 指定 Subscriber 的回调发生在主线程
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ZhihuDaily>() {
                     @Override
