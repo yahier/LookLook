@@ -55,6 +55,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+
 /**
  * Created by xinghongfei on 16/8/13.
  */

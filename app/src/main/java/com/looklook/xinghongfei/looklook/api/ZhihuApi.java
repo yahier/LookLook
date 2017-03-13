@@ -4,6 +4,7 @@ package com.looklook.xinghongfei.looklook.api;
 import com.looklook.xinghongfei.looklook.bean.zhihu.ZhihuDaily;
 import com.looklook.xinghongfei.looklook.bean.zhihu.ZhihuStory;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -20,6 +21,7 @@ public interface ZhihuApi {
     @GET("/api/4/news/{id}")
     Observable<ZhihuStory> getZhihuStory(@Path("id") String id);
 
-
+    @GET("blog/{id}")
+    Call<ZhihuDaily> getFirstBlog(@Path("id") int id);
 
 }

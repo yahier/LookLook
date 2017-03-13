@@ -73,6 +73,8 @@ public class ZhihuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
+
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
@@ -128,7 +130,7 @@ public class ZhihuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(GlideDrawable resource1, String model, Target<GlideDrawable> target1, boolean isFromMemoryCache, boolean isFirstResource) {
                         if (!zhihuDailyItem.hasFadedIn) {
                             holder.imageView.setHasTransientState(true);
                             final ObservableColorMatrix cm = new ObservableColorMatrix();
@@ -187,9 +189,11 @@ public class ZhihuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
+    /**
+     *
+     * @param list
+     */
     public void addItems(ArrayList<ZhihuDailyItem> list) {
-
-        int n = list.size();
         zhihuDailyItems.addAll(list);
         notifyDataSetChanged();
     }
@@ -245,7 +249,7 @@ public class ZhihuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    class ZhihuViewHolder extends RecyclerView.ViewHolder {
+    public static class ZhihuViewHolder extends RecyclerView.ViewHolder {
         final TextView textView;
         final LinearLayout linearLayout;
         BadgedFourThreeImageView imageView;

@@ -11,6 +11,9 @@ import com.looklook.xinghongfei.looklook.presenter.IZhihuPresenter;
 import com.looklook.xinghongfei.looklook.presenter.implView.IZhihuFragment;
 import com.looklook.xinghongfei.looklook.util.CacheUtil;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,6 +55,7 @@ public class ZhihuPresenterImpl extends BasePresenterImpl implements IZhihuPrese
                 .subscribeOn(Schedulers.io())
                 // 指定 Subscriber 的回调发生在主线程
                 .observeOn(AndroidSchedulers.mainThread())
+                //此方法返回 Subscription
                 .subscribe(new Observer<ZhihuDaily>() {
                     @Override
                     public void onCompleted() {
@@ -74,6 +78,23 @@ public class ZhihuPresenterImpl extends BasePresenterImpl implements IZhihuPrese
         addSubscription(subscription);
     }
 
+
+    void testHaha(){
+        Call call = ApiManage.getInstence().getZhihuApiService().getFirstBlog(1);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+
+
+    }
     @Override
     public void getTheDaily(String date) {
         Subscription subscription = ApiManage.getInstence().getZhihuApiService().getTheDaily(date)

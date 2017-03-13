@@ -57,7 +57,6 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         setRetainInstance(true);
         view = inflater.inflate(R.layout.zhihu_fragment_layout, container, false);
         checkConnectivity(view);
@@ -71,9 +70,9 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initialDate();
         initialView();
+        logCache("onViewCreated");
 
     }
 
@@ -88,13 +87,15 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
             }
             monitoringConnectivity = false;
         }
+
+        logCache("onPause");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         zhihuPresenter.unsubcrible();
-
+        logCache("onDestroy");
     }
 
 
@@ -208,6 +209,8 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         if (!recycle.canScrollVertically(View.SCROLL_INDICATOR_BOTTOM)) {
             loadMoreDate();
         }
+
+        logCache("updateList");
     }
 
     @Override
