@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 /**
  * Created by xinghongfei on 16/8/16.
+ * 看不出有建子类的必要呀 by yahier
  */
 public class WrapContentLinearLayoutManager extends LinearLayoutManager {
     public WrapContentLinearLayoutManager(Context context) {

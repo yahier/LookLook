@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
     @InjectView(R.id.prograss)
     ProgressBar mPrograss;
 
+    //demo原本是 WrapContentLinearLayoutManager
     WrapContentLinearLayoutManager linearLayoutManager;
     MeiziAdapter meiziAdapter;
     RecyclerView.OnScrollListener loadmoreListener;
@@ -43,7 +45,7 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
 
     private boolean loading;
 
-    private int index=1;
+    private int index = 1;
 
 
     @Nullable
@@ -65,7 +67,7 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
     }
 
     private void intialDate() {
-        mMeiziPresenter=new MeiziPresenterImpl(getContext(), this);
+        mMeiziPresenter = new MeiziPresenterImpl(getContext(), this);
 
     }
 
@@ -93,6 +95,7 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
         loadDate();
 
     }
+
     private void loadDate() {
         if (meiziAdapter.getItemCount() > 0) {
             meiziAdapter.clearData();
@@ -125,7 +128,7 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
 
                     if (!loading && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
-                        index+=1;
+                        index += 1;
                         loadMoreDate();
                     }
                 }
@@ -147,10 +150,13 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
     }
 
 
+    /**
+     * 有了新数据之后的回掉
+     */
     @Override
     public void updateMeiziData(ArrayList<Meizi> list) {
         meiziAdapter.loadingfinish();
-        loading=false;
+        loading = false;
         meiziAdapter.addItems(list);
         mMeiziPresenter.getVedioData(index);
     }
@@ -163,12 +169,12 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
 
     @Override
     public void showProgressDialog() {
-                mPrograss.setVisibility(View.VISIBLE);
+        mPrograss.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hidProgressDialog() {
-            mPrograss.setVisibility(View.INVISIBLE);
+        mPrograss.setVisibility(View.INVISIBLE);
     }
 
     @Override

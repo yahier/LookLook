@@ -233,7 +233,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    class MeiziViewHolder extends RecyclerView.ViewHolder {
+    public static class MeiziViewHolder extends RecyclerView.ViewHolder {
 //        final TextView textView;
 
         BadgedFourThreeImageView imageView;

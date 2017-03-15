@@ -7,13 +7,12 @@ import android.util.Log;
  * Created by xinghongfei on 16/8/17.
  */
 public class BaseFragment extends Fragment {
-    // TODO: 16/9/1
 
 
     void logCache(String methodName) {
         Runtime runtime = Runtime.getRuntime();
-        long freeMemory = runtime.freeMemory();
-        Log.e("logCache-" + methodName, "freeMemory:" + freeMemory);
+        float totalMemory = runtime.totalMemory() / 1024.0f / 1024.0f;
+        Log.e("logCache-" + methodName, "totalMemory:" + totalMemory);
 
     }
 }
