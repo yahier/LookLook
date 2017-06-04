@@ -8,6 +8,7 @@
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,18 +22,18 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Widget.Look.HomeToolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:outlineProvider="none"
             android:background="#bc000000"
             android:elevation="1dp"
-            style="@style/Widget.Look.HomeToolbar"
-            app:title="@string/app_name"/>
+            android:outlineProvider="none"
+            app:title="@string/app_name" />
     </FrameLayout>
 
     <android.support.design.widget.NavigationView

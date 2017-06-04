@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     ProgressBar progress;
 
     private String currentLoadDate;
+    final String TAG= getClass().getSimpleName();
 
     @Nullable
     @Override
@@ -66,13 +68,12 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     }
 
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initialDate();
-        initialView();
+        initial();
         logCache("onViewCreated");
+
 
     }
 
@@ -82,7 +83,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         if (monitoringConnectivity) {
             final ConnectivityManager connectivityManager
                     = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 connectivityManager.unregisterNetworkCallback(connectivityCallback);
             }
             monitoringConnectivity = false;
@@ -99,20 +100,19 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     }
 
 
-    private void initialDate() {
-        zhihuPresenter = new ZhihuPresenterImpl(getContext(),this);
+    /**
+     * 完成一些初始化的工作  包括presenter adapter和recycle
+     */
+    private void initial() {
+        zhihuPresenter = new ZhihuPresenterImpl(getContext(), this);
         zhihuAdapter = new ZhihuAdapter(getContext());
-    }
-
-    private void initialView() {
 
         initialListener();
-
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mLinearLayoutManager = new WrapContentLinearLayoutManager(getContext());
 
-        }else {
-            mLinearLayoutManager=new LinearLayoutManager(getContext());
+        } else {
+            mLinearLayoutManager = new LinearLayoutManager(getContext());
         }
         recycle.setLayoutManager(mLinearLayoutManager);
         recycle.setHasFixedSize(true);
@@ -123,13 +123,15 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         recycle.addOnScrollListener(loadingMoreListener);
 //      recycle.addOnScrollListener(tooldimissListener);
         if (connected) {
-            loadDate();
+            requestData();
         }
 
 
     }
 
-    private void loadDate() {
+
+    private void requestData() {
+        Log.e(TAG,"requestData");
         if (zhihuAdapter.getItemCount() > 0) {
             zhihuAdapter.clearData();
         }
@@ -171,7 +173,8 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         };
 
 
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //回调是有触发条件的，并不是说直接运行啦
             connectivityCallback = new ConnectivityManager.NetworkCallback() {
                 @Override
                 public void onAvailable(Network network) {
@@ -180,7 +183,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
                         @Override
                         public void run() {
                             noConnectionText.setVisibility(View.GONE);
-                            loadDate();
+                            requestData();
                         }
                     });
                 }
@@ -257,7 +260,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         connected = activeNetworkInfo != null && activeNetworkInfo.isConnected();
-        if (!connected && progress!=null) {//不判断容易抛出空指针异常
+        if (!connected && progress != null) {//不判断容易抛出空指针异常
             progress.setVisibility(View.INVISIBLE);
             if (noConnectionText == null) {
 
@@ -269,7 +272,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
 //                    (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.avd_no_connection);
 //            noConnection.setImageDrawable(avd);
 //            avd.start();
-            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 connectivityManager.registerNetworkCallback(
                         new NetworkRequest.Builder()
                                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build(),
@@ -283,9 +286,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     }
 
 
-
-
-        private ConnectivityManager.NetworkCallback connectivityCallback;
+    private ConnectivityManager.NetworkCallback connectivityCallback;
 
 
 }

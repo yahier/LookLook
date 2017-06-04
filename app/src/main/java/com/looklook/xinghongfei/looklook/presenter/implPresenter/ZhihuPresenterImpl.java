@@ -30,9 +30,8 @@ public class ZhihuPresenterImpl extends BasePresenterImpl implements IZhihuPrese
     private Gson gson = new Gson();
 
     public ZhihuPresenterImpl(Context context,IZhihuFragment zhihuFragment) {
-
-        mZhihuFragment = zhihuFragment;
         mCacheUtil = CacheUtil.get(context);
+        mZhihuFragment = zhihuFragment;
     }
 
     @Override
